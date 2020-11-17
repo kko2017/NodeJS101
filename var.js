@@ -1,10 +1,15 @@
-  const odd = "This is odd.";
-  const even = "This is even";
+const odd = "This is odd.";
+const even = "This is even";
 
 //   module.exports = {
 //       odd = odd,
 //       even = even
 //   }
+
+// module.exports === exports === {}
+
+// exports.odd;
+// exports.even;
 
 module.exports = {
     odd,
