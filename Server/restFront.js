@@ -19,7 +19,7 @@ async function getUser() {
                     return alert('You must put the name on it.');
                 }
                 try {
-                    await axios.put('/user' + key, { name });
+                    await axios.put('/user/' + key, { name });
                     getUser();
                 } catch (err) {
                     console.error(err);
