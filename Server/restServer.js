@@ -53,7 +53,7 @@ http.createServer(async (req, res) => {
           console.log('PUT 본문(Body):', body);
           users[key] = JSON.parse(body).name;
           res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-          return res.end('ok');
+          res.end('ok');
         });
       }
     } else if (req.method === 'DELETE') {
