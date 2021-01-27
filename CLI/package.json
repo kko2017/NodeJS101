@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "cli": "template.js"
+    "cli": "commander.js"
   },
   "author": "FifthOh",
   "license": "MIT",
