@@ -3,7 +3,9 @@ const { program } = require('commander');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+const inquirer = require('inquirer');
 const { version } = require('./package.json');
+const { listenerCount } = require('process');
 
 const htmlTemplate = `
 <!DOCTYPE html>
@@ -98,16 +100,53 @@ program
     });
 
 // when unregistered command is input by user. <ex> cli asdvvsad
+// program
+//     .command('*', { noHelp: true })
+//     .action(() => {
+//         console.log('Can\'t find this command.');
+//         program.help(); // cli -h
+//     });
+
+// when inputting cli only or unregistered command. <ex> cli or cli asdfae
 program
-    .command('*', { noHelp: true })
-    .action(() => {
-        console.log('Can\'t find this command.');
-        program.help(); // cli -h
-    });
-
-// when inputting cli only. <ex> cli
-program.action((cmd, argv) => {
-
+    .action((cmd, args) => {
+        if (process.argv.length > 2) {
+            console.log(chalk.bold.red('Can\'t find this command.'));
+            program.help(); // cli -h
+        } else {
+            inquirer.prompt([
+                {
+                    name: 'type',
+                    message: 'Please one of templates',
+                    type: 'list',
+                    choices: ['html', 'express-router']
+                },
+                {
+                    name: 'name',
+                    meassge: 'Please input filename',
+                    type: 'input',
+                    default: 'index'
+                },
+                {
+                    name: 'directory',
+                    message: 'Please input a path to store the file',
+                    type: 'input',
+                    default: '.'
+                },
+                {
+                    name: 'confirm',
+                    message: 'Do you want to proceed?',
+                    type: 'confirm'
+                }
+            ])
+                .then((answers) => {
+                    if (answers.confirm) {
+                        makeTemplate(answers.type, answers.name, answers.directory);
+                        console.log(chalk.rgb(128, 128, 128)('Terminate command'));
+                    }
+                
+                });
+        }
 });
 
 program.parse(process.argv);
